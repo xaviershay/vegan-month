@@ -1,0 +1,6 @@
+= Vegan Month
+
+A static site for Vegan Month, deployed to heroku.
+
+  rackup --port 3000
+  open http://localhost:3000
