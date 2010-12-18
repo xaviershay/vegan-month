@@ -1,2 +1,14 @@
+class DefaultPage < Rack::Directory
+  def call(env)
+    path = env['PATH_INFO']
+
+    if path =~ /\/$/ || !(path =~ /\..+$/)
+      env['PATH_INFO'] = File.join(path, 'index.html')
+    end
+
+    super
+  end
+end
+
 use Rack::Static, :urls => ["/images", "/fonts"], :root => "public"
-run lambda { |env| [200, { 'Content-Type' => 'text/html', 'Cache-Control' => 'public, max-age=86400' }, File.open('public/index.html', File::RDONLY)] }
+run DefaultPage.new("public")
